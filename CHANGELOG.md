@@ -12,6 +12,24 @@
 
 ### Warnings
 
+## marginal-action v1.1.0, 2026-09-08
+
+### Breaking Changes
+
+### New Features
+
+- `anthropic-api-key` / `openai-api-key` inputs: forwarded as
+  `ANTHROPIC_API_KEY`/`OPENAI_API_KEY` to the `marginal review` step, so
+  `marginal`'s `models.reviewer` (see `exactml/marginal` ISSUE-21) actually
+  has credentials to run with. Both optional — omit them if
+  `.marginal/config.yaml` doesn't configure `models.reviewer`
+
+### Improvements
+
+### Fixes
+
+### Warnings
+
 ## marginal-action v1.0.0, 2026-09-08
 
 ### Breaking Changes
