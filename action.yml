@@ -1,0 +1,55 @@
+name: 'marginal review'
+description: 'Post a marginal review summary as a PR comment'
+author: 'exactml'
+branding:
+  icon: 'message-square'
+  color: 'blue'
+
+inputs:
+  github-token:
+    description: 'Token marginal uses to read the pull request and post the comment'
+    required: true
+  repo:
+    description: 'GitHub repository as owner/name (default: the repository running this workflow)'
+    required: false
+    default: ''
+  pr-number:
+    description: 'Pull request number (default: the PR that triggered this workflow)'
+    required: false
+    default: ''
+  marginal-version:
+    description: 'marginal-review version to install, e.g. "0.1.0" (default: latest)'
+    required: false
+    default: ''
+  python-version:
+    description: 'Python version to run marginal with'
+    required: false
+    default: '3.11'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install marginal
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.marginal-version }}" ]; then
+          pip install "marginal-review==${{ inputs.marginal-version }}"
+        else
+          pip install marginal-review
+        fi
+
+    - name: Post review comment
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        MARGINAL_REPO: ${{ inputs.repo || github.repository }}
+        MARGINAL_PR_NUMBER: ${{ inputs.pr-number || github.event.pull_request.number }}
+      run: marginal review --repo "$MARGINAL_REPO" --pr "$MARGINAL_PR_NUMBER" --comment
