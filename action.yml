@@ -25,6 +25,14 @@ inputs:
     description: 'Python version to run marginal with'
     required: false
     default: '3.11'
+  anthropic-api-key:
+    description: 'ANTHROPIC_API_KEY, required if .marginal/config.yaml configures models.reviewer with provider: anthropic'
+    required: false
+    default: ''
+  openai-api-key:
+    description: 'OPENAI_API_KEY, required if .marginal/config.yaml configures models.reviewer with provider: openai'
+    required: false
+    default: ''
 
 runs:
   using: 'composite'
@@ -50,6 +58,8 @@ runs:
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
+        OPENAI_API_KEY: ${{ inputs.openai-api-key }}
         MARGINAL_REPO: ${{ inputs.repo || github.repository }}
         MARGINAL_PR_NUMBER: ${{ inputs.pr-number || github.event.pull_request.number }}
       run: marginal review --repo "$MARGINAL_REPO" --pr "$MARGINAL_PR_NUMBER" --comment
