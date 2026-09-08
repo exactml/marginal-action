@@ -1,5 +1,7 @@
 # marginal-action
 
+[![self-test](https://github.com/exactml/marginal-action/actions/workflows/self-test.yml/badge.svg)](https://github.com/exactml/marginal-action/actions/workflows/self-test.yml)
+
 A GitHub Action that runs [`marginal review --comment`](https://github.com/exactml/marginal)
 on a pull request and posts the result as a PR comment — no local install,
 no CI script of your own to maintain.
