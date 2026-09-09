@@ -49,9 +49,9 @@ runs:
       shell: bash
       run: |
         if [ -n "${{ inputs.marginal-version }}" ]; then
-          pip install "marginal-review==${{ inputs.marginal-version }}"
+          pip install "marginal-review[anthropic,openai]==${{ inputs.marginal-version }}"
         else
-          pip install marginal-review
+          pip install "marginal-review[anthropic,openai]"
         fi
 
     - name: Post review comment

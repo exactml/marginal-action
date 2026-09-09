@@ -12,6 +12,26 @@
 
 ### Warnings
 
+## marginal-action v1.1.1, 2026-09-09
+
+### Breaking Changes
+
+### New Features
+
+### Improvements
+
+### Fixes
+
+- Installs `marginal-review[anthropic,openai]` instead of bare
+  `marginal-review`. Without the extras, `models.reviewer` could never
+  work regardless of API key — the provider SDK itself was never installed,
+  failing with "requires its SDK to be installed" instead of running or
+  even reaching a credentials check
+
+  ([PR-3](https://github.com/exactml/marginal-action/pull/3))
+
+### Warnings
+
 ## marginal-action v1.1.0, 2026-09-08
 
 ### Breaking Changes
@@ -23,6 +43,8 @@
   `marginal`'s `models.reviewer` (see `exactml/marginal` ISSUE-21) actually
   has credentials to run with. Both optional — omit them if
   `.marginal/config.yaml` doesn't configure `models.reviewer`
+
+  ([PR-2](https://github.com/exactml/marginal-action/pull/2))
 
 ### Improvements
 
