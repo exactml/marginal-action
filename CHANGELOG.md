@@ -12,6 +12,24 @@
 
 ### Warnings
 
+## marginal-action v1.1.1, 2026-09-09
+
+### Breaking Changes
+
+### New Features
+
+### Improvements
+
+### Fixes
+
+- Installs `marginal-review[anthropic,openai]` instead of bare
+  `marginal-review`. Without the extras, `models.reviewer` could never
+  work regardless of API key — the provider SDK itself was never installed,
+  failing with "requires its SDK to be installed" instead of running or
+  even reaching a credentials check
+
+### Warnings
+
 ## marginal-action v1.1.0, 2026-09-08
 
 ### Breaking Changes
