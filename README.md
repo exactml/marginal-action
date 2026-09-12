@@ -56,6 +56,13 @@ message and posts nothing — it does not fall back to a metadata-only
 summary. Leave `models.reviewer` unset entirely in `.marginal/config.yaml`
 to skip finding generation and keep the metadata-only summary instead.
 
+The one exception is a pull request from a fork: GitHub never forwards
+repository secrets to a fork-triggered `pull_request` run, so a missing key
+there doesn't mean the workflow is misconfigured — it's expected. This
+action detects that case and skips the review with a `::notice::` instead
+of failing the run; a same-repo PR missing its key still fails loudly as
+above.
+
 ## Permissions
 
 Posting a PR comment needs `permissions: pull-requests: write` on the job
