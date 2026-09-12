@@ -10,6 +10,19 @@
 
 ### Fixes
 
+- The "Post review comment" step no longer fails a forked pull request's
+  run just because it never received `anthropic-api-key`/`openai-api-key`
+  — GitHub doesn't forward repository secrets to `pull_request` runs
+  triggered from a fork, so a `models.reviewer`-configured repo previously
+  failed CI on every external contributor's PR. Now detects `marginal
+  review`'s dedicated exit code for a missing-credentials failure
+  (see `exactml/marginal` ISSUE-60) and, only when the run is on a forked
+  PR, posts a `::notice::` and exits 0 instead. A same-repo PR missing its
+  key still fails loudly, same as before — this only recognizes the case
+  that isn't actually a misconfiguration
+
+  ([exactml/marginal ISSUE-60](https://github.com/exactml/marginal/issues/60))
+
 ### Warnings
 
 ## marginal-action v1.1.1, 2026-09-09
