@@ -62,4 +62,18 @@ runs:
         OPENAI_API_KEY: ${{ inputs.openai-api-key }}
         MARGINAL_REPO: ${{ inputs.repo || github.repository }}
         MARGINAL_PR_NUMBER: ${{ inputs.pr-number || github.event.pull_request.number }}
-      run: marginal review --repo "$MARGINAL_REPO" --pr "$MARGINAL_PR_NUMBER" --comment
+        IS_FORK_PR: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+      run: |
+        set +e
+        marginal review --repo "$MARGINAL_REPO" --pr "$MARGINAL_PR_NUMBER" --comment
+        status=$?
+        set -e
+
+        # exit 3 is marginal-review's dedicated code for a configured
+        # reviewer missing its credentials, distinct from the generic 1
+        # used for every other failure -- only swallow *this* one.
+        if [ "$status" -eq 3 ] && [ "$IS_FORK_PR" = "true" ]; then
+          echo "::notice::marginal review needs provider credentials that forked pull requests never receive (GitHub doesn't forward secrets to them) -- skipping this review instead of failing the run."
+          exit 0
+        fi
+        exit "$status"
