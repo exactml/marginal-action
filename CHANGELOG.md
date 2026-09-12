@@ -10,6 +10,18 @@
 
 ### Fixes
 
+### Warnings
+
+## marginal-action v1.1.2, 2026-09-12
+
+### Breaking Changes
+
+### New Features
+
+### Improvements
+
+### Fixes
+
 - The "Post review comment" step no longer fails a forked pull request's
   run just because it never received `anthropic-api-key`/`openai-api-key`
   — GitHub doesn't forward repository secrets to `pull_request` runs
@@ -22,7 +34,7 @@
   that isn't actually a misconfiguration
 
   ([exactml/marginal ISSUE-60](https://github.com/exactml/marginal/issues/60),
-  [PR-4](https://github.com/exactml/marginal-action/pull/4))
+  [PR-4](https://github.com/exactml/marginal-action/pull/4) by [@exactml](https://github.com/exactml))
 
 ### Warnings
 
@@ -42,7 +54,7 @@
   failing with "requires its SDK to be installed" instead of running or
   even reaching a credentials check
 
-  ([PR-3](https://github.com/exactml/marginal-action/pull/3))
+  ([PR-3](https://github.com/exactml/marginal-action/pull/3) by [@exactml](https://github.com/exactml))
 
 ### Warnings
 
@@ -58,7 +70,7 @@
   has credentials to run with. Both optional — omit them if
   `.marginal/config.yaml` doesn't configure `models.reviewer`
 
-  ([PR-2](https://github.com/exactml/marginal-action/pull/2))
+  ([PR-2](https://github.com/exactml/marginal-action/pull/2) by [@exactml](https://github.com/exactml))
 
 ### Improvements
 
