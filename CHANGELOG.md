@@ -21,7 +21,8 @@
   key still fails loudly, same as before — this only recognizes the case
   that isn't actually a misconfiguration
 
-  ([exactml/marginal ISSUE-60](https://github.com/exactml/marginal/issues/60))
+  ([exactml/marginal ISSUE-60](https://github.com/exactml/marginal/issues/60),
+  [PR-4](https://github.com/exactml/marginal-action/pull/4))
 
 ### Warnings
 
