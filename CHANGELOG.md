@@ -8,6 +8,14 @@
 
 ### Improvements
 
+- The README's workflow example now runs one review per PR at a time (a
+  `concurrency` group keyed on the PR number, queueing rather than
+  cancelling). Two pushes seconds apart used to start parallel runs that
+  each missed the other's review and posted it twice. Existing workflows
+  need the same block added by hand
+
+  ([PR-6](https://github.com/exactml/marginal-action/pull/6) by [@exactml](https://github.com/exactml))
+
 ### Fixes
 
 ### Warnings
