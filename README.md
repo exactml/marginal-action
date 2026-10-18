@@ -32,6 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      # Resolving a review thread (marginal closes ones a later push fixed)
+      # needs contents: write; marginal never pushes.
+      contents: write
     steps:
       - uses: exactml/marginal-action@v1
         with:
@@ -48,7 +51,7 @@ triggered the workflow, so most consumers only need to pass `github-token`
 
 | Input | Required | Default | Description |
 |---|---|---|---|
-| `github-token` | yes | — | Token used to read the PR and post the comment. `secrets.GITHUB_TOKEN` works as long as the job has `permissions: pull-requests: write`. |
+| `github-token` | yes | — | Token used to read the PR and post the comment. `secrets.GITHUB_TOKEN` works as long as the job has `permissions: pull-requests: write` and `contents: write`. |
 | `repo` | no | current repository | GitHub repository as `owner/name`. |
 | `pr-number` | no | current PR number | Pull request number. |
 | `marginal-version` | no | latest | Pin a specific `marginal-review` version instead of always installing latest. |
@@ -74,6 +77,13 @@ above.
 Posting a PR comment needs `permissions: pull-requests: write` on the job
 (or equivalent repository/organization default). Without it, GitHub itself
 will reject the API call before `marginal` ever gets a chance to run.
+
+Resolving a review thread -- marginal does this when a later push fixed one of
+its findings, or a person disputed it -- also needs `permissions: contents:
+write`. With only `pull-requests: write`, GitHub answers "Resource not
+accessible by integration": marginal still posts its `✅ Resolved` reply but
+can't collapse the thread, and resolves it on a later run once the permission
+is there. marginal never pushes to the repository.
 
 ## Related
 

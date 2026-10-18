@@ -16,6 +16,13 @@
 
   ([PR-6](https://github.com/exactml/marginal-action/pull/6) by [@exactml](https://github.com/exactml))
 
+- The README's workflow example now grants `contents: write`, which marginal
+  needs to resolve a review thread (a fixed or disputed finding). With only
+  `pull-requests: write`, GitHub refuses with "Resource not accessible by
+  integration". Existing workflows need it added by hand
+
+  ([PR-7](https://github.com/exactml/marginal-action/pull/7) by [@exactml](https://github.com/exactml))
+
 ### Fixes
 
 ### Warnings
