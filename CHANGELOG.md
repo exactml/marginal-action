@@ -23,6 +23,13 @@
 
   ([PR-7](https://github.com/exactml/marginal-action/pull/7) by [@exactml](https://github.com/exactml))
 
+- The README's workflow example now also triggers on `ready_for_review`.
+  marginal-review 0.2.9 skips draft PRs by default, so without it a draft
+  marked ready waited for its next push to be reviewed. Existing workflows
+  need `ready_for_review` added to their `pull_request` types by hand
+
+  ([PR-8](https://github.com/exactml/marginal-action/pull/8) by [@exactml](https://github.com/exactml))
+
 ### Fixes
 
 ### Warnings
