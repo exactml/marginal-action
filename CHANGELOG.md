@@ -6,6 +6,14 @@
 
 ### New Features
 
+- A merged pull request now runs `marginal propose`, which posts the rules and
+  decisions it proposes when `.marginal/config.yaml` sets
+  `proposals.enabled: true` (marginal-review 0.4.0 or later). Add `closed` to
+  the workflow's `pull_request` types to turn it on; existing workflows are
+  unchanged. A PR closed without merging, or one from a fork, is skipped
+
+  ([PR-9](https://github.com/exactml/marginal-action/pull/9) by [@exactml](https://github.com/exactml))
+
 ### Improvements
 
 - The README's workflow example now runs one review per PR at a time (a
