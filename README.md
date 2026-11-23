@@ -21,7 +21,8 @@ on:
   pull_request:
     # ready_for_review: a draft is skipped (review.skip_drafts), so review it
     # once it's marked ready rather than waiting for the next push.
-    types: [opened, synchronize, reopened, ready_for_review]
+    # closed: a merged PR posts its knowledge proposal (proposals.enabled).
+    types: [opened, synchronize, reopened, ready_for_review, closed]
 
 # One review per PR at a time: two runs started by quick successive pushes
 # would each miss the other's review and post the same header twice.
@@ -85,7 +86,22 @@ its findings, or a person disputed it -- also needs `permissions: contents:
 write`. With only `pull-requests: write`, GitHub answers "Resource not
 accessible by integration": marginal still posts its `✅ Resolved` reply but
 can't collapse the thread, and resolves it on a later run once the permission
-is there. marginal never pushes to the repository.
+is there. marginal never pushes to the repository, except to the one rolling
+knowledge PR when `permissions.write.push: true` is set (see below).
+
+## Knowledge proposals
+
+With `closed` in the workflow's `pull_request` types, a merged PR runs
+`marginal propose` instead of a review. With `proposals.enabled: true` in
+`.marginal/config.yaml`, it posts one comment with the rules and decisions the
+PR proposes; with it off (the default), it does nothing. A PR closed without
+merging, or one from a fork (its token is read-only), is skipped with a notice.
+No model call, so no provider key is used. It needs marginal-review 0.4.0 or
+later; an older one skips it with a notice.
+
+With `permissions.write.push: true` as well, marginal adds each rule and
+decision as a file to one rolling *marginal: knowledge to review* PR. See
+[Accepted knowledge](https://github.com/exactml/marginal#accepted-knowledge).
 
 ## Related
 

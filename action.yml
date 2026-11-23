@@ -1,5 +1,5 @@
 name: 'marginal review'
-description: 'Post a marginal review summary as a PR comment'
+description: 'Post a marginal review on a PR, and its knowledge proposal once it merges'
 author: 'exactml'
 branding:
   icon: 'message-square'
@@ -63,7 +63,27 @@ runs:
         MARGINAL_REPO: ${{ inputs.repo || github.repository }}
         MARGINAL_PR_NUMBER: ${{ inputs.pr-number || github.event.pull_request.number }}
         IS_FORK_PR: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+        EVENT_ACTION: ${{ github.event.action }}
+        MERGED: ${{ github.event.pull_request.merged }}
       run: |
+        # A closed PR gets no review. Once merged, it posts the knowledge it
+        # proposes (with proposals.enabled; otherwise propose does nothing).
+        if [ "$EVENT_ACTION" = "closed" ]; then
+          if [ "$MERGED" != "true" ]; then
+            echo "::notice::Closed without merging: nothing to review or propose."
+            exit 0
+          fi
+          if [ "$IS_FORK_PR" = "true" ]; then
+            echo "::notice::A forked pull request's token is read-only, so marginal can't post its knowledge proposal -- skipping."
+            exit 0
+          fi
+          if ! marginal propose --help >/dev/null 2>&1; then
+            echo "::notice::This marginal-review has no propose command (added in 0.4.0) -- skipping."
+            exit 0
+          fi
+          exec marginal propose --repo "$MARGINAL_REPO" --pr "$MARGINAL_PR_NUMBER" --comment
+        fi
+
         set +e
         marginal review --repo "$MARGINAL_REPO" --pr "$MARGINAL_PR_NUMBER" --comment
         status=$?
