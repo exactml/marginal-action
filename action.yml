@@ -47,12 +47,25 @@ runs:
 
     - name: Install marginal
       shell: bash
+      env:
+        MARGINAL_VERSION: ${{ inputs.marginal-version }}
       run: |
-        if [ -n "${{ inputs.marginal-version }}" ]; then
-          pip install "marginal-review[anthropic,openai]==${{ inputs.marginal-version }}"
-        else
+        if [ -z "$MARGINAL_VERSION" ]; then
           pip install "marginal-review[anthropic,openai]"
+          exit 0
         fi
+        # A pinned version also pins its dependencies, to the versions its release was tested with.
+        constraints="$RUNNER_TEMP/marginal-constraints.txt"
+        url="https://github.com/exactml/marginal/releases/download/v$MARGINAL_VERSION/constraints.txt"
+        if curl -fsSL "$url" -o "$constraints"; then
+          pip install "marginal-review[anthropic,openai]==$MARGINAL_VERSION" -c "$constraints"
+        else
+          echo "::warning::No constraints.txt for marginal-review $MARGINAL_VERSION (releases before it existed have none), so its dependencies are the newest versions."
+          pip install "marginal-review[anthropic,openai]==$MARGINAL_VERSION"
+        fi
+        echo "::group::Installed packages"
+        pip freeze
+        echo "::endgroup::"
 
     - name: Post review comment
       shell: bash

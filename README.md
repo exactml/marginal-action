@@ -57,7 +57,7 @@ triggered the workflow, so most consumers only need to pass `github-token`
 | `github-token` | yes | — | Token used to read the PR and post the comment. `secrets.GITHUB_TOKEN` works as long as the job has `permissions: pull-requests: write` and `contents: write`. |
 | `repo` | no | current repository | GitHub repository as `owner/name`. |
 | `pr-number` | no | current PR number | Pull request number. |
-| `marginal-version` | no | latest | Pin a specific `marginal-review` version instead of always installing latest. |
+| `marginal-version` | no | latest | Pin a specific `marginal-review` version instead of always installing latest. A pinned version also installs the dependency versions its release was tested with (its release's `constraints.txt`); see [Pinning and upgrading](https://github.com/exactml/marginal#pinning-and-upgrading). |
 | `python-version` | no | `3.11` | Python version used to run `marginal`. |
 | `anthropic-api-key` | no | — | `ANTHROPIC_API_KEY`. Required only if `.marginal/config.yaml` configures `models.reviewer` with `provider: anthropic`. |
 | `openai-api-key` | no | — | `OPENAI_API_KEY`. Required only if `.marginal/config.yaml` configures `models.reviewer` with `provider: openai`. |
