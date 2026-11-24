@@ -6,6 +6,14 @@
 
 ### New Features
 
+- With `marginal-version` set, the action also installs the dependency
+  versions that marginal release was tested with (its release's
+  `constraints.txt`), so a pinned setup no longer changes when a dependency
+  releases. A release without the file installs as before and warns once;
+  unpinned installs are unchanged
+
+  ([PR-11](https://github.com/exactml/marginal-action/pull/11) by [@exactml](https://github.com/exactml))
+
 - A merged pull request now runs `marginal propose`, which posts the rules and
   decisions it proposes when `.marginal/config.yaml` sets
   `proposals.enabled: true` (marginal-review 0.4.0 or later). Add `closed` to
