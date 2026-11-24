@@ -6,6 +6,18 @@
 
 ### New Features
 
+### Improvements
+
+### Fixes
+
+### Warnings
+
+## marginal-action v1.2.0, 2026-11-24
+
+### Breaking Changes
+
+### New Features
+
 - With `marginal-version` set, the action also installs the dependency
   versions that marginal release was tested with (its release's
   `constraints.txt`), so a pinned setup no longer changes when a dependency
